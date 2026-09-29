@@ -103,6 +103,8 @@
     grid-column: 1 / -1;
   }
   /* cada linha do título estica de uma ponta à outra (ajustado pelo script) */
+  .hero > *, .ads > * { min-width: 0; }
+  .hero h1 { overflow: hidden; }
   .hero h1 .line { display: block; white-space: nowrap; width: max-content; }
   .hero h1 .line:first-child { letter-spacing: -.01em; }
   .hero h1 .grad { margin-top: .08em; }
@@ -185,6 +187,8 @@
     font-family: var(--display); font-weight: 400; text-transform: uppercase;
     font-size: clamp(34px, 4.5vw, 54px); line-height: 1; margin: 10px 0 6px;
   }
+  .h-touch { display: none; }
+  @media (hover: none) { .h-mouse { display: none; } .h-touch { display: inline; } }
   .phones-sec .hint { color: var(--muted); margin: 0 0 10px; }
   .marquee {
     position: relative; overflow: hidden; padding-block: 36px;
@@ -363,7 +367,7 @@
     <div class="wrap">
       <div class="eyebrow">Portfólio</div>
       <h2>Minhas músicas</h2>
-      <p class="hint">Passe o mouse para pausar, aperte o play para ouvir e clique na capa para abrir</p>
+      <p class="hint"><span class="h-mouse">Passe o mouse para pausar, aperte o play para ouvir e clique na capa para abrir</span><span class="h-touch">Toque para pausar, aperte o play para ouvir e toque na capa para abrir</span></p>
     </div>
     <div class="row">
     <button class="arrow prev" id="prev" aria-label="Voltar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -507,6 +511,10 @@
   marquee.addEventListener('mouseleave', () => paused = false);
   marquee.addEventListener('focusin', () => paused = true);
   marquee.addEventListener('focusout', () => paused = false);
+  // No celular não existe "passar o mouse": ao tocar, o carrossel para por alguns segundos
+  let touchTimer;
+  marquee.addEventListener('touchstart', () => { paused = true; clearTimeout(touchTimer); }, { passive: true });
+  marquee.addEventListener('touchend', () => { touchTimer = setTimeout(() => paused = false, 4000); }, { passive: true });
   document.getElementById('next').onclick = () => target = (target ?? offset) + step();
   document.getElementById('prev').onclick = () => target = (target ?? offset) - step();
 
