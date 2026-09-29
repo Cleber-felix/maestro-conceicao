@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maestro Conceição · Minhas obras</title>
+<meta name="description" content="Composições e crônicas do Maestro Conceição, do Projeto Conceiçando. Ouça as músicas autorais.">
+<meta property="og:title" content="Maestro Conceição">
+<meta property="og:description" content="Composições e crônicas do Maestro Conceição. Ouça as músicas autorais do Projeto Conceiçando.">
+<meta property="og:image" content="img/destaque.jpg">
+<style>body{margin:0}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Kaushan+Script&display=swap">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b0714;
+    --bg-2: #140c24;
+    --ink: #f6f1ff;
+    --muted: #b8aacd;
+    --pink: #ff2e88;
+    --orange: #ff8a1f;
+    --yellow: #ffc83d;
+    --violet: #7b3cff;
+    --blue: #2f6bff;
+    --line: rgba(255,255,255,.1);
+    --display: "Anton", "Impact", "Arial Narrow", sans-serif;
+    --body: "Barlow", "Segoe UI", system-ui, sans-serif;
+    --script: "Kaushan Script", "Brush Script MT", cursive;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.55 var(--body);
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; border-radius: 6px; }
+
+  .wrap { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: 20px; }
+
+  /* Aviso do mockup */
+  .note {
+    background: var(--yellow); color: #1a1026; font-weight: 600; font-size: 14px;
+    text-align: center; padding: 8px 16px;
+  }
+
+  /* Luzes de fundo animadas */
+  .glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .glow span {
+    position: absolute; width: 46vmax; height: 46vmax; border-radius: 50%;
+    filter: blur(90px); opacity: .35; animation: drift 18s ease-in-out infinite alternate;
+  }
+  .glow span:nth-child(1) { background: var(--pink); top: -15vmax; left: -10vmax; }
+  .glow span:nth-child(2) { background: var(--violet); top: 30vh; right: -18vmax; animation-delay: -6s; }
+  .glow span:nth-child(3) { background: var(--orange); bottom: -20vmax; left: 20vw; opacity: .22; animation-delay: -12s; }
+  @keyframes drift { to { transform: translate(6vmax, 4vmax) scale(1.15); } }
+
+  main, header, footer { position: relative; z-index: 1; }
+
+  /* Menu */
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; }
+  .logo { font-family: var(--display); font-size: 26px; letter-spacing: .06em; }
+  .logo b { color: var(--pink); }
+  .nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-weight: 500; font-size: 15px; }
+  .nav ul a { color: var(--muted); transition: color .2s; }
+  .nav ul a:hover { color: var(--ink); }
+  .nav .btn { margin-left: auto; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer;
+    font: 700 14px/1 var(--body); letter-spacing: .08em; text-transform: uppercase;
+    padding: 14px 22px; border-radius: 999px; color: #1a1026;
+    background: linear-gradient(90deg, var(--yellow), var(--orange));
+    transition: transform .25s, box-shadow .25s;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -8px var(--orange); }
+  .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+  .btn.ghost:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+
+  /* Placeholder de foto */
+  .ph {
+    position: relative; overflow: hidden;
+    background: var(--g, linear-gradient(135deg, var(--pink), var(--violet)));
+  }
+  .ph::after {
+    content: attr(data-label);
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    font: 600 11px/1.2 var(--body); letter-spacing: .12em; text-transform: uppercase;
+    color: #fff; text-align: center; white-space: nowrap;
+    padding: 6px 10px; border: 1.5px dashed rgba(255,255,255,.7); border-radius: 6px;
+    background: rgba(0,0,0,.25);
+  }
+
+  /* Hero */
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 32px 40px; align-items: start; padding-block: 40px 70px; }
+  .eyebrow { font-weight: 600; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--yellow); }
+  .hero h1 {
+    font-family: var(--display); font-weight: 400; text-transform: uppercase;
+    font-size: clamp(52px, 8.5vw, 112px); line-height: .9; margin: 0;
+    grid-column: 1 / -1;
+  }
+  /* cada linha do título estica de uma ponta à outra (ajustado pelo script) */
+  .hero h1 .line { display: block; white-space: nowrap; width: max-content; }
+  .hero h1 .line:first-child { letter-spacing: -.01em; }
+  .hero h1 .grad { margin-top: .08em; }
+  .hero h1 .grad {
+    background: linear-gradient(90deg, var(--yellow), var(--orange), var(--pink), var(--violet), var(--yellow));
+    background-size: 300% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmer 8s linear infinite;
+  }
+  @keyframes shimmer { to { background-position: 300% 0; } }
+  .hero p { color: var(--muted); max-width: 46ch; font-size: 18px; margin: 0 0 28px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+  .hero-art { position: relative; }
+  .hero-art .ph {
+    aspect-ratio: 4/4.4; max-width: 100%; border-radius: 28px;
+    --g: radial-gradient(circle at 30% 30%, var(--orange), transparent 55%),
+         radial-gradient(circle at 75% 70%, var(--blue), transparent 55%),
+         linear-gradient(160deg, var(--pink), var(--violet));
+    box-shadow: 0 40px 80px -30px rgba(255,46,136,.55);
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float { 50% { transform: translateY(-12px); } }
+  .hero-img {
+    display: block; width: 100%; max-width: 100%; aspect-ratio: 4/4.4; object-fit: cover; object-position: top;
+    border-radius: 28px; box-shadow: 0 0 0 1px var(--line), 0 40px 80px -30px rgba(255,138,31,.55);
+    animation: float 6s ease-in-out infinite;
+  }
+  .stats { position: absolute; right: -10px; bottom: 28px; display: grid; gap: 12px; }
+  .stat {
+    background: rgba(20,12,36,.8); backdrop-filter: blur(10px);
+    border: 1px solid var(--line); border-radius: 16px; padding: 12px 18px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat strong { display: block; font-family: var(--display); font-weight: 400; font-size: 30px; line-height: 1; color: var(--yellow); }
+  .stat span { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+  /* Entrada ao carregar */
+  .rise { animation: rise .9s cubic-bezier(.2,.8,.2,1) both; }
+  .d1 { animation-delay: .1s; } .d2 { animation-delay: .2s; } .d3 { animation-delay: .3s; } .d4 { animation-delay: .45s; }
+  @keyframes rise { from { transform: translateY(24px); opacity: .001; } }
+
+  /* Seção anúncios */
+  .ads { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; align-items: stretch; padding-block: 40px; border-top: 1px solid var(--line); }
+  .ads h2 {
+    font-family: var(--display); font-weight: 400; text-transform: uppercase;
+    font-size: clamp(40px, 5.5vw, 68px); line-height: .95; margin: 10px 0 18px; text-wrap: balance;
+  }
+  .ads h2 em { font-style: normal; color: var(--yellow); }
+  .ads p { color: var(--muted); max-width: 40ch; margin: 0 0 24px; }
+  .ad-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .ad {
+    position: relative; display: flex; flex-direction: column; justify-content: flex-end;
+    border-radius: 18px; overflow: hidden; min-height: 260px; padding: 16px;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+  }
+  .ad .ph { position: absolute; inset: 0; }
+  .ad .ph::after { top: 36%; }
+  .ad h3 {
+    position: relative; font-family: var(--display); font-weight: 400; text-transform: uppercase;
+    font-size: 26px; line-height: 1; margin: 0 0 6px; text-shadow: 0 2px 12px rgba(0,0,0,.4);
+  }
+  .ad small { position: relative; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+  .ad:has(.wm) { container-type: inline-size; }
+  .ad-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+  .ad::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, transparent 45%, rgba(11,7,20,.85)); }
+  .ad h3 { z-index: 2; }
+  .ad:hover .ad-img { transform: scale(1.06); }
+  .wm {
+    position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; pointer-events: none;
+    font-family: var(--script); font-size: 10.5cqw; line-height: 1; color: rgba(45,22,4,.62);
+    text-shadow: 0 1px 0 rgba(255,240,210,.55), 0 0 12px rgba(255,235,200,.6);
+    transform: rotate(-10deg) translateY(-12%); white-space: nowrap;
+  }
+  .ad:hover { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 24px 50px -20px rgba(255,138,31,.6); }
+
+  /* Carrossel de celulares */
+  .phones-sec { padding-block: 60px 30px; text-align: center; }
+  .phones-sec h2 {
+    font-family: var(--display); font-weight: 400; text-transform: uppercase;
+    font-size: clamp(34px, 4.5vw, 54px); line-height: 1; margin: 10px 0 6px;
+  }
+  .phones-sec .hint { color: var(--muted); margin: 0 0 10px; }
+  .marquee {
+    position: relative; overflow: hidden; padding-block: 36px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .track { display: flex; gap: 28px; width: max-content; will-change: transform; }
+  .row { position: relative; }
+  .arrow {
+    position: absolute; top: 50%; z-index: 3; transform: translateY(-50%);
+    width: 52px; height: 52px; border-radius: 50%; border: 0; cursor: pointer;
+    display: grid; place-items: center;
+    background: rgba(11,7,20,.75); color: var(--ink); backdrop-filter: blur(6px);
+    box-shadow: inset 0 0 0 1.5px var(--line);
+    opacity: .75; transition: opacity .25s, transform .25s, background .25s;
+  }
+  .arrow svg { width: 22px; height: 22px; }
+  .arrow.prev { left: 12px; } .arrow.next { right: 12px; }
+  .row:hover .arrow { opacity: 1; }
+  .arrow:hover { background: var(--pink); transform: translateY(-50%) scale(1.08); }
+
+  .phone {
+    flex: none; width: 200px; aspect-ratio: 9/19; border-radius: 34px; padding: 9px;
+    background: linear-gradient(145deg, #2a2338, #0e0a16);
+    box-shadow: 0 0 0 1.5px #3a3150, 0 30px 50px -25px rgba(0,0,0,.9);
+    transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s, filter .4s;
+    display: block;
+  }
+  .phone .screen {
+    position: relative; height: 100%; border-radius: 26px; overflow: hidden; text-align: left;
+    display: flex; flex-direction: column; gap: 10px; padding: 34px 14px 16px;
+    background: linear-gradient(180deg, var(--c, #5a4a2a) 0%, #121212 72%);
+    color: #fff; font-family: var(--body);
+  }
+  .phone .screen::before {
+    content: ""; position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 18px; border-radius: 12px; background: #0e0a16; z-index: 2;
+  }
+  .p-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 9px; }
+  .p-top svg { width: 14px; height: 14px; flex: none; opacity: .9; }
+  .p-top div { text-align: center; line-height: 1.25; min-width: 0; }
+  .p-top small { display: block; letter-spacing: .12em; text-transform: uppercase; opacity: .75; font-size: 8px; }
+  .p-top b { display: block; font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .p-cover {
+    display: block; width: 100%; aspect-ratio: 1; border-radius: 8px; overflow: hidden; margin-top: 6px;
+    box-shadow: 0 14px 30px -10px rgba(0,0,0,.7);
+  }
+  .p-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .p-cover.ph::after { font-size: 9px; padding: 5px 7px; }
+  .p-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 4px; }
+  .p-meta div { min-width: 0; }
+  .p-meta h3 {
+    margin: 0; font: 700 14px/1.2 var(--body); overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  }
+  .p-meta p { margin: 2px 0 0; font-size: 11px; color: #b3b3b3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .p-like { flex: none; width: 18px; height: 18px; color: #1ed760; }
+  .p-bar { height: 3px; border-radius: 3px; background: rgba(255,255,255,.25); overflow: hidden; }
+  .p-bar i { display: block; height: 100%; width: var(--pct, 0%); background: #fff; border-radius: 3px; }
+  .phone.playing .p-bar i { background: #1ed760; }
+  .p-time { display: flex; justify-content: space-between; font-size: 9px; color: #b3b3b3; margin-top: -6px; font-variant-numeric: tabular-nums; }
+  .p-ctrl { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+  .p-ctrl svg { width: 16px; height: 16px; }
+  .p-ctrl .sm { opacity: .7; }
+  .p-play {
+    width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+    display: grid; place-items: center; background: #fff; color: #121212;
+    transition: transform .2s;
+  }
+  .p-play:hover { transform: scale(1.08); }
+  .p-play svg { width: 18px; height: 18px; }
+  .p-play .i-pause, .phone.playing .p-play .i-play { display: none; }
+  .phone.playing .p-play .i-pause { display: block; }
+  .phone.playing { box-shadow: 0 0 0 2px #1ed760, 0 30px 50px -25px rgba(0,0,0,.9); }
+  .track:hover .phone { filter: brightness(.55) saturate(.8); }
+  .track .phone:hover, .track .phone:focus-visible {
+    filter: none; transform: scale(1.1) translateY(-6px);
+    box-shadow: 0 0 0 2px var(--yellow), 0 30px 60px -20px var(--pink);
+  }
+
+  /* Rodapé */
+  .outro { text-align: center; padding-block: 30px 70px; }
+  .outro .big {
+    font-family: var(--display); font-weight: 400; text-transform: uppercase; line-height: .9;
+    font-size: clamp(56px, 12vw, 160px); margin: 0;
+    color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.75);
+  }
+  .outro .script {
+    display: block; font-family: var(--script); font-size: clamp(40px, 7vw, 90px); line-height: 1;
+    margin-top: -.35em; color: var(--yellow);
+    background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 22px; }
+
+  /* Responsivo */
+  @media (max-width: 900px) {
+    .nav ul { display: none; }
+    .hero, .ads { grid-template-columns: 1fr; }
+    .ad-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats { right: 12px; }
+  }
+  @media (max-width: 480px) {
+    .phone { width: 160px; }
+    .ad { min-height: 200px; }
+    .ad h3 { font-size: 21px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+
+
+<div class="glow" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<header class="wrap">
+  <nav class="nav">
+    <ul>
+      <li><a href="#">Início</a></li>
+      <li><a href="#anuncios">Serviços</a></li>
+      <li><a href="#portfolio">Portfólio</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a class="btn" href="#contato">Fale comigo</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <h1 class="rise d1" id="headline"><span class="line">Maestro Conceição</span><span class="line grad">Minhas obras</span></h1>
+    <div>
+      <div class="actions rise d3">
+        <a class="btn" href="#portfolio">Ver portfólio</a>
+        <a class="btn ghost" href="#portfolio">Minhas músicas</a>
+      </div>
+    </div>
+    <div class="hero-art rise d4">
+      <img class="hero-img" src="img/destaque.jpg" alt="Maestro Conceição no palco, de fraque, segurando a batuta">
+      <div class="stats">
+        <div class="stat"><strong>90+</strong><span>Músicas</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap ads" id="anuncios">
+    <div>
+      <div class="eyebrow">O que eu faço</div>
+      <h2>Composições e crônicas que <em>chamam a atenção</em></h2>
+      <a class="btn" href="#portfolio">Saiba mais</a>
+    </div>
+    <div class="ad-grid">
+      <a class="ad" href="#">
+        <img class="ad-img" src="img/galeria.jpg" alt="Show do Festival Conceiçando no Teatro Lauro Gomes">
+        <h3>Galeria de fotos</h3>
+      </a>
+      <a class="ad" href="#">
+        <img class="ad-img" src="img/playlist.jpg" alt="Toca-discos com vinil e fones de ouvido">
+        <h3>Playlist</h3>
+      </a>
+      <a class="ad" href="#">
+        <img class="ad-img" src="img/cronicas.jpg" alt="Caneta bico de pena escrevendo em um pergaminho">
+        <h3>Minhas crônicas</h3>
+      </a>
+      <a class="ad" href="#">
+        <img class="ad-img" src="img/downloads.jpg" alt="Página de partitura"><span class="wm" aria-hidden="true">Maestro Conceição</span>
+        <h3>Downloads</h3>
+      </a>
+    </div>
+  </section>
+
+  <section class="phones-sec" id="portfolio">
+    <div class="wrap">
+      <div class="eyebrow">Portfólio</div>
+      <h2>Minhas músicas</h2>
+      <p class="hint">Passe o mouse para pausar, aperte o play para ouvir e clique na capa para abrir</p>
+    </div>
+    <div class="row">
+    <button class="arrow prev" id="prev" aria-label="Voltar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="arrow next" id="next" aria-label="Avançar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    <div class="marquee" id="marquee">
+      <div class="track" id="track"></div>
+    </div>
+    </div>
+  </section>
+
+  <section class="outro wrap">
+    <p class="big">Modern ads</p>
+    <span class="script">design</span>
+  </section>
+</main>
+
+<footer id="contato">
+  <div class="wrap">
+    <span>© 2026 Todos os direitos reservados.</span>
+    <span>contato@seusite.com · @seuinstagram</span>
+  </div>
+</footer>
+
+<script>
+  // Título: a linha de cima preenche a largura toda; a de baixo fica menor
+  const headline = document.getElementById('headline');
+  const SUB_SCALE = 0.55;                  // tamanho da 2ª linha em relação à 1ª
+  function fitHeadline() {
+    const [top, sub] = headline.querySelectorAll('.line');
+    top.style.fontSize = '100px';
+    const size = 100 * headline.clientWidth / top.scrollWidth;
+    top.style.fontSize = size + 'px';
+    sub.style.fontSize = (size * SUB_SCALE) + 'px';
+  }
+  fitHeadline();
+  document.fonts?.ready.then(fitHeadline);
+  window.addEventListener('resize', fitHeadline);
+
+  // ===== Lista de músicas =====
+  // Para adicionar uma música, copie uma linha e troque os dados.
+  // capa: imagem quadrada · audio: arquivo .mp3 · link: página que abre ao clicar na capa · cor: cor do fundo do card
+  const MUSICAS = [
+    { titulo: 'Hino aos Migrantes', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '2:59',
+      capa: 'img/hino-aos-migrantes.jpg', audio: 'audio/hino-aos-migrantes.mp3', link: '#link-1', cor: '#8a5a24' },
+    { titulo: 'Oração', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '3:07',
+      capa: 'img/oracao.jpg', audio: 'audio/oracao.mp3', link: '#link-2', cor: '#755937' },
+    { titulo: 'Olhar Encantador', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '2:17',
+      capa: 'img/olhar-encantador.jpg', audio: 'audio/olhar-encantador.mp3', link: '#link-3', cor: '#7a3440' },
+    { titulo: 'Fria', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '3:18',
+      capa: 'img/fria.jpg', audio: 'audio/fria.mp3', link: '#link-4', cor: '#6a2626' },
+    { titulo: 'Jesus Abençoe as Crianças', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '1:52',
+      capa: 'img/jesus-abencoe-as-criancas.jpg', audio: 'audio/jesus-abencoe-as-criancas.mp3', link: '#link-5', cor: '#3f7a8a' },
+    { titulo: 'Os Mineiros', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '3:34',
+      capa: 'img/os-mineiros.jpg', audio: 'audio/os-mineiros.mp3', link: '#link-6', cor: '#8d6a45' },
+    { titulo: 'Vida Roubada', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '1:53',
+      capa: 'img/vida-roubada.jpg', audio: 'audio/vida-roubada.mp3', link: '#link-7', cor: '#6a3424' },
+    { titulo: 'Timbó', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '2:03',
+      capa: 'img/timbo.jpg', audio: 'audio/timbo.mp3', link: '#link-8', cor: '#4f6a3a' },
+    { titulo: 'Seleção Brasil', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '1:05',
+      capa: 'img/selecao-brasil.jpg', audio: 'audio/selecao-brasil.mp3', link: '#link-9', cor: '#2f7a3a' },
+    { titulo: 'Deixa o Menino Jogar', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '2:27',
+      capa: 'img/deixa-o-menino-jogar.jpg', audio: 'audio/deixa-o-menino-jogar.mp3', link: '#link-10', cor: '#5a6a2a' },
+    { titulo: 'Chorar Não', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '5:07',
+      capa: 'img/chorar-nao.jpg', audio: 'audio/chorar-nao.mp3', link: '#link-11', cor: '#2a3f8a' },
+    { titulo: 'Cartão de Todos', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '1:14',
+      capa: 'img/cartao-de-todos.jpg', audio: 'audio/cartao-de-todos.mp3', link: '#link-12', cor: '#2a7a54' },
+    { titulo: 'A Carta', artista: 'Maestro Conceição', album: 'Projeto Conceiçando', duracao: '3:12',
+      capa: 'img/a-carta.jpg', audio: 'audio/a-carta.mp3', link: '#link-13', cor: '#6a5a4a' },
+  ];
+
+  const ICON = {
+    down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+    more: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>',
+    like: '<svg class="p-like" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg>',
+    shuffle: '<svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>',
+    prev: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>',
+    next: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg>',
+    repeat: '<svg class="sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4M3 11V9a3 3 0 013-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 01-3 3H3"/></svg>',
+    play: '<svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>',
+    pause: '<svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>',
+  };
+
+  const track = document.getElementById('track');
+  track.innerHTML = MUSICAS.map((m, i) => `
+    <div class="phone" data-i="${i}" style="--c:${m.cor}"><div class="screen">
+      <div class="p-top">${ICON.down}<div><small>Tocando do álbum</small><b>${m.album}</b></div>${ICON.more}</div>
+      <a class="p-cover${m.capa ? '' : ' ph'}" href="${m.link}" ${m.capa ? '' : `data-label="Capa da música ${i + 1}"`} style="--g: linear-gradient(135deg, ${m.cor}, #121212)">
+        ${m.capa ? `<img src="${m.capa}" alt="Capa de ${m.titulo}">` : ''}
+      </a>
+      <div class="p-meta"><div><h3>${m.titulo}</h3><p>${m.artista}</p></div>${ICON.like}</div>
+      <div class="p-bar"><i></i></div>
+      <div class="p-time"><span class="t-now">0:00</span><span class="t-end">${m.duracao}</span></div>
+      <div class="p-ctrl">${ICON.shuffle}${ICON.prev}
+        <button class="p-play" aria-label="Tocar ${m.titulo}">${ICON.play}${ICON.pause}</button>
+        ${ICON.next}${ICON.repeat}</div>
+    </div></div>`).join('');
+
+  // Player: uma música por vez; o play/pause vale para o celular e a cópia dele
+  const player = new Audio();
+  let playingIndex = null;
+  const fmt = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
+  const phonesOf = i => track.querySelectorAll(`.phone[data-i="${i}"]`);
+  function setPlaying(i, on) { phonesOf(i).forEach(p => p.classList.toggle('playing', on)); }
+
+  track.addEventListener('click', e => {
+    const btn = e.target.closest('.p-play');
+    if (!btn) return;
+    const i = +btn.closest('.phone').dataset.i;
+    const m = MUSICAS[i];
+    if (!m.audio) { btn.animate([{ transform: 'translateX(-3px)' }, { transform: 'translateX(3px)' }, { transform: 'none' }], 250); return; }
+    if (playingIndex === i && !player.paused) { player.pause(); return; }
+    if (playingIndex !== i) {
+      if (playingIndex !== null) setPlaying(playingIndex, false);
+      playingIndex = i; player.src = m.audio;
+    }
+    player.play().catch(() => {});
+  });
+  player.addEventListener('play', () => setPlaying(playingIndex, true));
+  player.addEventListener('pause', () => setPlaying(playingIndex, false));
+  player.addEventListener('timeupdate', () => {
+    if (playingIndex === null || !player.duration) return;
+    phonesOf(playingIndex).forEach(p => {
+      p.style.setProperty('--pct', (100 * player.currentTime / player.duration) + '%');
+      p.querySelector('.t-now').textContent = fmt(player.currentTime);
+      p.querySelector('.t-end').textContent = fmt(player.duration);
+    });
+  });
+
+  // Carrossel estilo Netflix: desliza da direita para a esquerda sem parar,
+  // pausa com o mouse em cima e as setas pulam um celular por vez.
+  const marquee = document.getElementById('marquee');
+  const originals = [...track.children];
+  originals.forEach(el => {               // cópia para o loop não ter emenda
+    const copy = el.cloneNode(true);
+    copy.setAttribute('aria-hidden', 'true');
+    copy.tabIndex = -1;
+    track.appendChild(copy);
+  });
+
+  const SPEED = 45;                        // pixels por segundo
+  let offset = 0, target = null, paused = false, last = performance.now();
+  const loopWidth = () => originals.length * (originals[0].offsetWidth + 28);
+  const step = () => originals[0].offsetWidth + 28;
+
+  marquee.addEventListener('mouseenter', () => paused = true);
+  marquee.addEventListener('mouseleave', () => paused = false);
+  marquee.addEventListener('focusin', () => paused = true);
+  marquee.addEventListener('focusout', () => paused = false);
+  document.getElementById('next').onclick = () => target = (target ?? offset) + step();
+  document.getElementById('prev').onclick = () => target = (target ?? offset) - step();
+
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, .05); last = now;
+    if (target !== null) {                 // deslize suave até o próximo celular
+      offset += (target - offset) * Math.min(1, dt * 8);
+      if (Math.abs(target - offset) < .5) { offset = target; target = null; }
+    } else if (!paused) {
+      offset += SPEED * dt;
+    }
+    const w = loopWidth();
+    if (offset >= w) { offset -= w; if (target !== null) target -= w; }
+    if (offset < 0)  { offset += w; if (target !== null) target += w; }
+    track.style.transform = `translateX(${-offset}px)`;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+</script>
+
+</body>
+</html>
