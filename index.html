@@ -104,7 +104,8 @@
   }
   /* cada linha do título estica de uma ponta à outra (ajustado pelo script) */
   .hero > *, .ads > * { min-width: 0; }
-  .hero h1 { overflow: hidden; }
+  /* corta só nas laterais, para não esconder o til do "Ã" */
+  .hero h1 { overflow-x: clip; overflow-y: visible; padding-top: .14em; }
   .hero h1 .line { display: block; white-space: nowrap; width: max-content; }
   .hero h1 .line:first-child { letter-spacing: -.01em; }
   .hero h1 .grad { margin-top: .08em; }
@@ -330,7 +331,7 @@
       </div>
     </div>
     <div class="hero-art rise d4">
-      <img class="hero-img" src="img/destaque.jpg" alt="Maestro Conceição no palco, de fraque, segurando a batuta">
+      <img class="hero-img" src="img/destaque.jpg" alt="Maestro Conceição sorrindo no palco, de fraque, segurando a batuta">
       <div class="stats">
         <div class="stat"><strong>90+</strong><span>Músicas</span></div>
       </div>
